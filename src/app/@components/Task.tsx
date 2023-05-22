@@ -5,7 +5,7 @@
 
 import { ITask } from "@/types/Tasks"
 
-export const Task = ({task:Task}) => {
+export const Task = ({task}:{task:ITask}) => {
   return (
     <tr>
         <th>{task.id}</th>
