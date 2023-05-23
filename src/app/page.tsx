@@ -1,74 +1,106 @@
 
-'use client';
-import AddTask from './@components/AddTask';
+'use client'
+import AddTask from "./@components/AddTask";
 // import ToDoList from './@components/ToDoList';
-import  {useRouter} from 'next/navigation'
+import { useRouter } from "next/navigation";
 
-import React from "react";
-import {useState, createContext, useContext} from "react";
+import React, { use } from "react";
+import { useState, createContext, useContext } from "react";
 import { Task } from "./@components/Task";
-import { ThemeContext, AuthContext, TasksContext, User } from './Context/store';
-import {getAllTodos} from './api'
-
-
-
+import { ThemeContext, AuthContext, TasksContext, User } from "./Context/store";
+import { getAllTodos } from "./api";
+import ToDoList from "./@components/ToDoList";
 
 async function getData() {
-  const baseUrl = 'http://localhost:3001';
+  const baseUrl = "http://localhost:3001/tasks";
   const res = await fetch(baseUrl);
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
- 
-  // Recommendation: handle errors
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch data');
-  }
- 
+
   return res.json();
 }
-const dataResponse = getData();
 
 
 export default async function Home() {
-
-
-  const [theme, setTheme] = useState('dark');
-  
-  let u:User =  {name: 'Taylor' }
+  const [theme, setTheme] = useState("dark");
+  console.log("hello" +Date.now())
+  let u: User = { name: "Taylor" };
   const [currentUser, setCurrentUser] = useState(u);
+  const tasks = [
+    {
+      "id":"1",
+    "text":"a",
+    },
+    {
+      "id":"2",
+    "text":"b",
+    },
+    {
+      "id":"3",
+    "text":"c",
+    },
+    {
+      "id":"4",
+    "text":"d",
+    },
+  ]
+  // const tasks = getData();
 
-
-  return <>
-    <TasksContext.Provider value={[]}>
-     <ThemeContext.Provider value={theme}>
-      <AuthContext.Provider value={currentUser}>
-        <Page />
-      </AuthContext.Provider>
-    </ThemeContext.Provider>
-    </TasksContext.Provider>
-  </>
-};
-
-function Button(){
-  const theme = useContext(ThemeContext);
-  return <>
-    <button>
-      {theme}
-    </button>
-  </>
+  return (
+    <>
+      <TasksContext.Provider value={tasks}>
+        <ThemeContext.Provider value={theme}>
+          <AuthContext.Provider value={currentUser}>
+            <Page />
+            <ToDoList></ToDoList>
+          </AuthContext.Provider>
+        </ThemeContext.Provider>
+      </TasksContext.Provider>
+    </>
+  );
 }
-function Profile(){
+
+function Button() {
+  const theme = useContext(ThemeContext);
+  return (
+    <>
+      <button>{theme}</button>
+    </>
+  );
+}
+function Profile() {
   const currentUser = useContext(AuthContext);
   const t = useContext(TasksContext);
-  // console.log(t);
-  return <h1>
-    {currentUser.name}
-  </h1>
+
+  return <h1>{currentUser.name}</h1>;
 }
-function Page(){
-  return <>
-    <Button/>
-    <Profile/>
-  </>
+function Page() {
+  console.log("page")
+  return (
+    <>
+    <h1>Hello world</h1>
+      <Button />
+      <Profile />
+    </>
+  );
 }
+
+
+// function ToDoList() {
+//   // const tasks = useContext(TasksContext);
+//   // console.log(tasks.length)
+//   return (
+//     <>
+//     <table>
+//         <thead>
+//           <tr>
+//             <th>Tast</th>
+//             <th>Action</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+        
+          
+//         </tbody>
+//       </table>
+//     </>
+//   );
+// };

@@ -10,5 +10,6 @@ import { createContext } from "react";
 export const ThemeContext = createContext("light");
 export const AuthContext = createContext(currentUser);
 
-const tasks = getAllTodos();
-export const TasksContext = createContext(tasks);
+// const tasks = getAllTodos();
+export const TasksContext = createContext([{"id":"","text":""}]);
+// export const TasksContext = createContext(tasks);

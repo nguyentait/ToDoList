@@ -1,12 +1,16 @@
+
 import { ITask } from "@/types/Tasks";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 
 import { Task } from "./Task";
+import { TasksContext } from "../Context/store";
 
-const ToDoList = () => {
-
+export default function ToDoList() {
+  const tasks = useContext(TasksContext);
+  console.log(tasks.length)
   return (
+    <>
     <div className="overflow-x-auto">
       <table className="table w-full">
         <thead>
@@ -16,12 +20,13 @@ const ToDoList = () => {
           </tr>
         </thead>
         <tbody>
-          {/* {tasks.map((task) => (
+          {/* <h2>To do list</h2> */}
+          {tasks.map((task) => (
             <Task key={task.id} task={task}></Task>
-          ))} */}
+          ))}
         </tbody>
       </table>
-    </div>
+    </div></>
   );
 };
-export default ToDoList;
+
