@@ -4,7 +4,7 @@ import AddTask from "./@components/AddTask";
 // import ToDoList from './@components/ToDoList';
 import { useRouter } from "next/navigation";
 
-import React, { use } from "react";
+import React, { use, useEffect } from "react";
 import { useState, createContext, useContext } from "react";
 import { Task } from "./@components/Task";
 import { ThemeContext, AuthContext, TasksContext, User } from "./Context/store";
@@ -18,32 +18,41 @@ async function getData() {
   return res.json();
 }
 
+// 
 
 export default async function Home() {
   const [theme, setTheme] = useState("dark");
   console.log("hello" +Date.now())
   let u: User = { name: "Taylor" };
   const [currentUser, setCurrentUser] = useState(u);
-  const tasks = [
-    {
-      "id":"1",
-    "text":"a",
-    },
-    {
-      "id":"2",
-    "text":"b",
-    },
-    {
-      "id":"3",
-    "text":"c",
-    },
-    {
-      "id":"4",
-    "text":"d",
-    },
-  ]
-  // const tasks = getData();
+  const [tasks,setTasks]=useState([]);
+  
+  // const tasks = [
+  //   {
+  //     "id":"1",
+  //   "text":"a",
+  //   },
+  //   {
+  //     "id":"2",
+  //   "text":"b",
+  //   },
+  //   {
+  //     "id":"3",
+  //   "text":"c",
+  //   },
+  //   {
+  //     "id":"4",
+  //   "text":"d",
+  //   },
+  // ]
+  
 
+  useEffect(() => {
+    const data = getData();
+    setTasks( data)
+    
+  }, []);
+  
   return (
     <>
       <TasksContext.Provider value={tasks}>
@@ -83,24 +92,3 @@ function Page() {
   );
 }
 
-
-// function ToDoList() {
-//   // const tasks = useContext(TasksContext);
-//   // console.log(tasks.length)
-//   return (
-//     <>
-//     <table>
-//         <thead>
-//           <tr>
-//             <th>Tast</th>
-//             <th>Action</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-        
-          
-//         </tbody>
-//       </table>
-//     </>
-//   );
-// };

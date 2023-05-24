@@ -8,7 +8,7 @@ import { TasksContext } from "../Context/store";
 
 export default function ToDoList() {
   const tasks = useContext(TasksContext);
-  console.log(tasks.length)
+  
   return (
     <>
     <div className="overflow-x-auto">
@@ -20,7 +20,6 @@ export default function ToDoList() {
           </tr>
         </thead>
         <tbody>
-          {/* <h2>To do list</h2> */}
           {tasks.map((task) => (
             <Task key={task.id} task={task}></Task>
           ))}
